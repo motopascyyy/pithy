@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="${blogTitle}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+</head>
+<body>
+    <div th:replace="~{header :: header}"></div>
+    <main>
+        <h1 th:text="'Welcome to ' + ${blogTitle}" />
+        <h4 th:text="${blogDesc}" />
+        <div th:each="entry : ${fileList}">
+            <a th:href="@{/{path}(path=${entry.getPostName()})}" >
+                <div class="post-item">
+                    <h5 th:text="${entry.getAuthor()}"/>
+                    <h6 th:text="${entry.getFormattedCreatedDate()}"/>
+        <!--            <a th:href="@{/{path}(path=${entry.getPostName()})}" >-->
+                    <h2 th:text="${entry.getPostName()}"/>
+        <!--            </a>-->
+<!--                    <h6 th:text="'Last Updated ' + ${entry.getFormattedUpdatedDate()}" />-->
+                    <p th:utext="${entry.getLead()}"/>
+                </div>
+            </a>
+        </div>
+    </main>
+    <footer th:replace="~{footer :: footer}"></footer>
+</body>
+</html>

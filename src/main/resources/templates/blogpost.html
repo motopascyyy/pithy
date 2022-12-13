@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="${blogPost.getPostName()}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+</head>
+<body>
+    <header th:replace="header :: header"/>
+    <main>
+        <h1 th:text="${blogPost.getPostName()}"/>
+        <article>
+            <div class="post-info">
+                <h5 th:text="${blogPost.getAuthor()}"/>
+				<div th:if="${blogPost.isUpdated()}">
+					<h6 th:utext="'Updated: <em>' + ${blogPost.getFormattedUpdatedDate()} + '</em>'"/>
+				</div>
+                <h6 th:text="${blogPost.getFormattedCreatedDate()}"/>
+            </div>
+
+            <p th:utext="${blogPost.getContent()}" />
+        </article>
+    </main>
+    <footer th:replace="footer :: footer"></footer>
+</body>
+</html>

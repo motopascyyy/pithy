@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+</head>
+<body>
+    <header>
+		<input type="checkbox" id="nav-check">
+		<a href="/">
+            <div class="logo">
+<!--				<img th:src="@{/images/brain_dump_logo.svg}"/>-->
+				PT Blog
+            </div>
+
+        </a>
+
+		<div class="nav-btn">
+			<label for="nav-check">
+				<span></span>
+				<span></span>
+				<span></span>
+			</label>
+		</div>
+
+		<div class="nav-links">
+			<a th:each="headerLink: ${headerLinks}" th:href="@{/fixed/{path}(path=${headerLink.getLabel()})}" th:text="${headerLink.getLabel()}" />
+			<a href="/rss"><img th:src="@{/images/Generic_Feed-icon.svg}" alt="RSS Icon"/></a>
+		</div>
+    </header>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title th:text="${fixedPage.getLabel()}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+</head>
+<body>
+	<header th:replace="header :: header"/>
+	<main>
+		<h1 th:text="${fixedPage.getLabel()}"/>
+		<article>
+			<div class="post-info">
+				<h6 th:utext="'Updated: <em>' + ${fixedPage.getLastUpdated()} + '</em>'"/>
+			</div>
+
+			<p th:utext="${fixedPage.getContent()}" />
+		</article>
+	</main>
+	<footer th:replace="footer :: footer"></footer>
+</body>
+</html>
