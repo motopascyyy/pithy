@@ -44,14 +44,14 @@ class FixedPageTest {
         var pageList = new ArrayList<FixedPage>();
 
         for (int i = 5; i >=0; i--) {
-            pageBuilder.fileName(Integer.toString(i) + "something");
+            pageBuilder.fileName(i + "something");
             pageList.add(pageBuilder.build());
         }
 
         Collections.sort(pageList);
         for (int i = 0; i < pageList.size(); i++) {
             var fixedPage = pageList.get(i);
-            assertThat(fixedPage.getPageOrder()).isEqualTo(Integer.MIN_VALUE);
+            assertThat(fixedPage.getPageOrder()).isEqualTo(Integer.MAX_VALUE);
             assertThat(fixedPage.getFileName()).startsWith(Integer.toString(i));
         }
     }
@@ -68,16 +68,16 @@ class FixedPageTest {
 
         var pageList = new ArrayList<FixedPage>();
 
-        pageList.add(page1);
-        pageList.add(page2);
-        pageList.add(page3);
         pageList.add(page4);
+        pageList.add(page3);
+        pageList.add(page2);
+        pageList.add(page1);
 
         Collections.sort(pageList);
 
-        assertThat(pageList.get(0)).isEqualTo(page3);
-        assertThat(pageList.get(1)).isEqualTo(page4);
-        assertThat(pageList.get(2)).isEqualTo(page1);
-        assertThat(pageList.get(3)).isEqualTo(page2);
+        assertThat(pageList.get(0)).isEqualTo(page1);
+        assertThat(pageList.get(1)).isEqualTo(page2);
+        assertThat(pageList.get(2)).isEqualTo(page3);
+        assertThat(pageList.get(3)).isEqualTo(page4);
     }
 }

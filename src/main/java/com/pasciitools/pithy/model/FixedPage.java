@@ -21,7 +21,7 @@ public class FixedPage implements Comparable<FixedPage>{
     private String label;
 
     @Builder.Default
-    private Integer pageOrder = Integer.MIN_VALUE;
+    private Integer pageOrder = Integer.MAX_VALUE;
 
     /**
      * First compares if an order has been specified. If one was not provided, a default order of -1 is used for
