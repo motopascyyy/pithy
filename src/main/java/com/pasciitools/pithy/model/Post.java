@@ -22,16 +22,6 @@ public class Post implements Comparable<Post> {
 
     private String url;
 
-    public String getFormattedCreatedDate () {
-        DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG);
-        return dateCreated.format(formatter);
-    }
-
-    public String getFormattedUpdatedDate () {
-        DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.LONG, FormatStyle.SHORT);
-        return lastUpdated.atZone(ZoneId.systemDefault()).format(formatter);
-    }
-
     public Post(String author, LocalDateTime dateCreated, LocalDateTime lastUpdated, String postName) {
         this.author = author;
         this.dateCreated = dateCreated;
@@ -44,8 +34,23 @@ public class Post implements Comparable<Post> {
         return o.getDateCreated().compareTo(this.getDateCreated());
     }
 
+
     public boolean isUpdated () {
-        return !dateCreated.truncatedTo(ChronoUnit.SECONDS).isEqual(
-                lastUpdated.truncatedTo(ChronoUnit.SECONDS));
+        if (dateCreated != null && lastUpdated != null) {
+            return !dateCreated.truncatedTo(ChronoUnit.SECONDS).isEqual(
+                    lastUpdated.truncatedTo(ChronoUnit.SECONDS));
+        } else {
+            return false;
+        }
+    }
+
+    public String getFormattedCreatedDate () {
+        DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG);
+        return dateCreated != null ? dateCreated.format(formatter) : null;
+    }
+
+    public String getFormattedUpdatedDate () {
+        DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.LONG, FormatStyle.SHORT);
+        return lastUpdated != null ? lastUpdated.atZone(ZoneId.systemDefault()).format(formatter): null;
     }
 }

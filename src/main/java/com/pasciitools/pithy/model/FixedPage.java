@@ -4,6 +4,10 @@ import lombok.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+import java.time.temporal.ChronoUnit;
 
 @Builder(toBuilder = true)
 @Getter
@@ -39,5 +43,22 @@ public class FixedPage implements Comparable<FixedPage>{
         return pageOrderComparison;
     }
 
+    public boolean isUpdated () {
+        if (dateCreated != null && lastUpdated != null) {
+            return !dateCreated.truncatedTo(ChronoUnit.SECONDS).isEqual(
+                    lastUpdated.truncatedTo(ChronoUnit.SECONDS));
+        } else {
+            return false;
+        }
+    }
 
+    public String getFormattedCreatedDate () {
+        DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG);
+        return dateCreated != null ? dateCreated.format(formatter) : null;
+    }
+
+    public String getFormattedUpdatedDate () {
+        DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.LONG, FormatStyle.SHORT);
+        return lastUpdated != null ? lastUpdated.atZone(ZoneId.systemDefault()).format(formatter): null;
+    }
 }

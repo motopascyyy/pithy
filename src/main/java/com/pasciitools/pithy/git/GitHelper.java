@@ -69,11 +69,13 @@ public class GitHelper implements Serializable {
             RevCommit commit = iter.next();
             PersonIdent author = commit.getAuthorIdent();
             metaData.getAuthors().add(author.getName());
+            var timeStamp = LocalDateTime.ofInstant(author.getWhenAsInstant(), author.getZoneId());
             if (counter == 0) {
-                metaData.setLatestTime(LocalDateTime.ofInstant(author.getWhenAsInstant(), author.getZoneId()));
+                metaData.setLatestTime(timeStamp);
+                metaData.setInitialDate(timeStamp);
             }
             else if (!iter.hasNext()) {
-                metaData.setInitialDate(LocalDateTime.ofInstant(author.getWhenAsInstant(), author.getZoneId()));
+                metaData.setInitialDate(timeStamp);
             }
             counter++;
         }

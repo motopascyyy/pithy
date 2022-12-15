@@ -12,7 +12,10 @@
 		<h1 th:text="${fixedPage.getLabel()}"/>
 		<article>
 			<div class="post-info">
-				<h6 th:utext="'Updated: <em>' + ${fixedPage.getLastUpdated()} + '</em>'"/>
+				<div th:if="${fixedPage.isUpdated()}">
+					<h6 th:utext="'Updated: <em>' + ${fixedPage.getLastUpdated()} + '</em>'"/>
+				</div>
+				<h6 th:text="${fixedPage.getFormattedCreatedDate()}"/>
 			</div>
 
 			<p th:utext="${fixedPage.getContent()}" />

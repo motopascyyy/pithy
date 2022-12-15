@@ -78,7 +78,7 @@ public class FixedPageRepository extends PageRepository implements Serializable 
    }
 
     public FixedPage createFixedPageObject (File file, GitHelper gitHelper) throws GitAPIException, IOException {
-        FileMetaData metaData = gitHelper.getOriginDate(file.getName());
+        FileMetaData metaData = gitHelper.getOriginDate("fixed_pages/" + file.getName());
         var creationTime = metaData.getInitialDate();
         var updatedTime = metaData.getLatestTime();
         String fileName = file.getName();
