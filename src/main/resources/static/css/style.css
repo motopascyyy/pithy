@@ -128,8 +128,8 @@ header > #nav-check {
     header > .nav-btn {
         display: inline-block;
         position: absolute;
-        right: 0px;
-        top: 0px;
+        right: 0;
+        top: 0;
     }
 
     header > .nav-btn > label {
@@ -157,11 +157,11 @@ header > #nav-check {
         display: block;
         width: 100%;
         background-color: #333;
-        height: 0px;
+        height: 0;
         transition: all 0.1s ease-in;
         overflow-y: hidden;
         top: 50px;
-        left: 0px;
+        left: 0;
         text-align: right;
     }
 
@@ -171,7 +171,7 @@ header > #nav-check {
     }
 
     header > #nav-check:not(:checked) ~ .nav-links {
-        height: 0px;
+        height: 0;
     }
 
     header > #nav-check:checked ~ .nav-links {
@@ -187,15 +187,25 @@ header > #nav-check {
 }
 
 .logo {
-    max-height: 30px;
+    max-height: 50px;
     border: none;
     position: absolute;
-    left: 0;
-    top: 20px;
 }
 
-.logo img {
+.logo > a:hover {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.logo > a {
+    display: inline-block;
+    padding: 5px 20px 0 20px;
+    text-decoration: none;
+    color: #efefef;
+}
+
+.logo > a > img {
     max-width: 100px;
+    height: 40px;
 }
 
 
@@ -211,7 +221,7 @@ header > #nav-check {
     box-shadow: 3px 3px 10px lightgray;
     transition: all 0.1s ease-in-out;
     padding: 5px 30px 5px 30px;
-    margin: 20px 0px 20px 0px;
+    margin: 20px 0 20px 0;
 }
 
 a {
@@ -237,7 +247,6 @@ footer {
     background-color: #4d4d4d;
     color: #fff;
 }
-
 
 pre {
     padding: 10px;
