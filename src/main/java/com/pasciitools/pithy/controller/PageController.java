@@ -95,7 +95,7 @@ public class PageController implements Serializable, ErrorController {
             var listOfHeaderLinks = fixedPageRepository.getListOfFixedPages();
             m.put("headerLinks", listOfHeaderLinks);
         } catch (IOException e) {
-            log.error("Could not load links destined for the header. Cause: {}\nSite will continue to load but may appear incorrect.", e.getMessage(), e);
+            log.warn("Could not load links destined for the header. Cause: {}\nSite will continue to load but may appear incorrect.", e.getMessage());
         }
         return m;
     }
