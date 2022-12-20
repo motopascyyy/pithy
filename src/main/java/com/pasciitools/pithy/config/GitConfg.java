@@ -54,12 +54,8 @@ public class GitConfg implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         repoPath = repoPath.endsWith(File.separator) ? repoPath : repoPath + File.separator;
         var filePathRoot = "file:" + repoPath;
-        var faviconLocation = filePathRoot + "images/favicon.ico";
         registry.
                 addResourceHandler("/blog-repo/**").
-                addResourceLocations("file:" + repoPath).setCachePeriod(3600).resourceChain(true);
-        registry.
-                addResourceHandler("/favicon.ico").
-                addResourceLocations(faviconLocation);
+                addResourceLocations(filePathRoot).setCachePeriod(3600).resourceChain(true);
     }
 }
