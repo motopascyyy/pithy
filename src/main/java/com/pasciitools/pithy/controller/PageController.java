@@ -3,6 +3,8 @@ package com.pasciitools.pithy.controller;
 import com.pasciitools.pithy.config.BlogConfiguration;
 import com.pasciitools.pithy.data.FixedPageRepository;
 import com.pasciitools.pithy.data.PostRepository;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.web.servlet.error.ErrorController;
@@ -12,11 +14,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Controller
 public class PageController implements Serializable, ErrorController {
@@ -56,7 +59,7 @@ public class PageController implements Serializable, ErrorController {
             var p = postRepository.getPost(postName);
             model.put("blogPost", p);
             model.putAll(loadHeaderLinks());
-        } catch (IOException e) {
+        } catch (Exception e) {
             log.error("Could not load '/{} due to {}", postName, e.getMessage());
             return ERROR;
         }
@@ -85,8 +88,27 @@ public class PageController implements Serializable, ErrorController {
             Integer statusCode = Integer.valueOf(status.toString());
             model.put("errorCode", statusCode);
             model.put("errorException", request.getAttribute(RequestDispatcher.ERROR_EXCEPTION));
+            logError(request);
         }
         return ERROR;
+    }
+
+    private void logError (HttpServletRequest request) {
+        var headerNames = request.getHeaderNames();
+        List<String> headerNamesList = new ArrayList<>();
+        var headerNamesIter = headerNames.asIterator();
+        while (headerNamesIter.hasNext()) {
+            headerNamesList.add(headerNamesIter.next());
+        }
+        log.error("Error loading page:\nURL: {} \nClient IP: {}\nMethod: {}\nContext Path: {}\nHeader Names{}\nUser Agent: {}",
+                request.getAttribute(RequestDispatcher.ERROR_REQUEST_URI),
+                request.getRemoteAddr(),
+                request.getMethod(),
+                request.getContextPath(),
+                headerNamesList,
+                request.getHeader("user-agent")
+        );
+
     }
 
     private ModelMap loadHeaderLinks () {
