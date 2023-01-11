@@ -88,11 +88,11 @@ Hi everyone,
 
 My name is Joe Dough....
 ```
+The `order` value will be taken into consideration and prioritized over the file name. If 2 files share the same order, then the filename based sorting will take effect. The same logic applies if a bad number value is provided in the order (e.g decimal numbers or non-numeric characters).
 
 ### Media Assets
 Things like images, video or audio are your own responsibility to provide. You can commit those to your Blog repo, upload to a CDN, or manually copy them to a web accessible place on your server. At this time, I don't provide much support for media assets. This will improve in the future but for now, please host your files elsewhere or use services such as Youtube/Vimeo which offer way better support for media hosting.
 
-The `order` value will be taken into consideration and prioritized over the file name. If 2 files share the same order, then the filename based sorting will take effect. The same logic applies if a bad number value is provided in the order (e.g decimal numbers or non-numeric characters).
 
 [YAML Front Matter Additional Information](https://github.com/commonmark/commonmark-java#yaml-front-matter)
 
