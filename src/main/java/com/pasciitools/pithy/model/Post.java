@@ -31,7 +31,9 @@ public class Post implements Comparable<Post> {
 
     @Override
     public int compareTo(@NotNull Post o) {
-        return o.getDateCreated().compareTo(this.getDateCreated());
+        LocalDateTime comparedDate = o.getDateCreated() != null ? o.getDateCreated() : LocalDateTime.MIN;
+        LocalDateTime thisCreatedDate = this.getDateCreated() != null ? this.getDateCreated() : LocalDateTime.MIN;
+        return comparedDate.compareTo(thisCreatedDate);
     }
 
 
