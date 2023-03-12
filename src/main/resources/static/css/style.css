@@ -47,6 +47,7 @@ body {
     font-size: var(--font-size-medium);
     font-family: -apple-system, system-ui, Verdana, sans-serif;
     margin: 0;
+    background: #f2f5f7;
 }
 
 main {
@@ -54,6 +55,19 @@ main {
     line-height: 1.6em;
 }
 
+main > article{
+    flex: 1;
+    line-height: 1.6em;
+    background: white;
+    margin: 10px 0 10px 0;
+    border-radius: 6px;
+    padding: 1em 1em 0.25em 1em;
+    box-shadow: 0 1px 2px rgb(48 54 60 / 15%);
+}
+
+.post-info > h1 {
+    margin-top: 0
+}
 main, article {
     max-width: 640px;
     margin-left: auto;
@@ -65,12 +79,12 @@ main, article {
     line-height: var(--font-size-small);
 }
 
-.post-info h5 {
+.post-info h5, .post-item h5 {
     margin: 0;
     line-height: var(--font-size-medium);
 }
 
-.post-info h6, .post-info div h6 {
+.post-info h6, .post-info div h6, .post-item h6 {
     color: darkgray;
     line-height: var(--font-size-medium);
     margin: 0;
@@ -79,6 +93,7 @@ main, article {
 h1 {
     line-height: 1.1em;
     margin-bottom: 0.5rem;
+    margin-top: 0;
 }
 
 h6 strong {
@@ -180,8 +195,8 @@ header > #nav-check {
     }
 
     main {
-        margin-left: 15px;
-        margin-right: 15px;
+        margin-left: auto;
+        margin-right: auto;
     }
 
 }
@@ -210,19 +225,30 @@ header > #nav-check {
 
 
 .post-item {
-    border: 1px solid lightgray;
-    border-radius: 5px;
+    /* border: 1px solid lightgray; */
+    border-radius: 6px;
     color: inherit;
+    box-shadow: 0 1px 2px rgb(48 54 60 / 15%);
     padding: 5px 30px 5px 30px;
     margin: 20px 3px 20px 3px;
+    background: WHITE;
 }
 
 .post-item:hover {
-    box-shadow: 3px 3px 10px lightgray;
+    box-shadow: 0 10px 15px -5px rgb(48 54 60 / 15%), 0 1px 2px 0 rgb(48 54 60 / 15%);
     transition: all 0.1s ease-in-out;
-    padding: 5px 30px 5px 30px;
-    margin: 20px 0 20px 0;
+    transform: translate(0, -1px);
 }
+
+article a {
+    text-decoration: underline;
+    color: #68c40c;
+}
+
+article a:visited {
+    color: #305f07;
+}
+
 
 a {
     text-decoration: none;
@@ -259,4 +285,13 @@ pre {
 pre code {
     font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
     font-size: var(--font-size-small);
+}
+
+.footnotes {
+    font-size: 0.8rem;
+}
+
+.footnotes li p {
+    line-height: 1rem;
+    margin-bottom: 0.5em;
 }

@@ -5,6 +5,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.time.temporal.ChronoUnit;
@@ -12,9 +13,11 @@ import java.time.temporal.ChronoUnit;
 @Data
 public class Post implements Comparable<Post> {
     private String author;
-    private LocalDateTime dateCreated;
-    private LocalDateTime lastUpdated;
+    private ZonedDateTime dateCreated;
+    private ZonedDateTime lastUpdated;
     private String postName;
+
+    private static ZonedDateTime minDate = ZonedDateTime.of(LocalDateTime.MIN, ZoneId.of("UTC"));
 
     private String content;
 
@@ -22,7 +25,7 @@ public class Post implements Comparable<Post> {
 
     private String url;
 
-    public Post(String author, LocalDateTime dateCreated, LocalDateTime lastUpdated, String postName) {
+    public Post(String author, ZonedDateTime dateCreated, ZonedDateTime lastUpdated, String postName) {
         this.author = author;
         this.dateCreated = dateCreated;
         this.lastUpdated = lastUpdated;
@@ -31,8 +34,8 @@ public class Post implements Comparable<Post> {
 
     @Override
     public int compareTo(@NotNull Post o) {
-        LocalDateTime comparedDate = o.getDateCreated() != null ? o.getDateCreated() : LocalDateTime.MIN;
-        LocalDateTime thisCreatedDate = this.getDateCreated() != null ? this.getDateCreated() : LocalDateTime.MIN;
+        var comparedDate = o.getDateCreated() != null ? o.getDateCreated() : minDate;
+        var thisCreatedDate = this.getDateCreated() != null ? this.getDateCreated() : minDate;
         return comparedDate.compareTo(thisCreatedDate);
     }
 
@@ -53,6 +56,6 @@ public class Post implements Comparable<Post> {
 
     public String getFormattedUpdatedDate () {
         DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.LONG, FormatStyle.SHORT);
-        return lastUpdated != null ? lastUpdated.atZone(ZoneId.systemDefault()).format(formatter): null;
+        return lastUpdated != null ? lastUpdated.format(formatter): null;
     }
 }

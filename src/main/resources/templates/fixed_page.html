@@ -9,11 +9,11 @@
 <body>
 	<header th:replace="header :: header"/>
 	<main>
-		<h1 th:text="${fixedPage.getLabel()}"/>
 		<article>
 			<div class="post-info">
+				<h1 th:text="${fixedPage.getLabel()}"/>
 				<div th:if="${fixedPage.isUpdated()}">
-					<h6 th:utext="'Updated: <em>' + ${fixedPage.getLastUpdated()} + '</em>'"/>
+					<h6 th:utext="'Updated: <em>' + ${fixedPage.getFormattedUpdatedDate()} + '</em>'"/>
 				</div>
 				<h6 th:text="${fixedPage.getFormattedCreatedDate()}"/>
 			</div>

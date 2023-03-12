@@ -2,12 +2,12 @@ package com.pasciitools.pithy.model.rss;
 
 import lombok.Data;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 @Data
 public class RSSItem {
     private String title;
     private String author;
     private String link;
-    private LocalDateTime pubDate;
+    private ZonedDateTime pubDate;
 }

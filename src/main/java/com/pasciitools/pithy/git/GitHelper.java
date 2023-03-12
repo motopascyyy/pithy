@@ -17,7 +17,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Serial;
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @Component
@@ -69,7 +69,7 @@ public class GitHelper implements Serializable {
             RevCommit commit = iter.next();
             PersonIdent author = commit.getAuthorIdent();
             metaData.getAuthors().add(author.getName());
-            var timeStamp = LocalDateTime.ofInstant(author.getWhenAsInstant(), author.getZoneId());
+            var timeStamp = ZonedDateTime.ofInstant(author.getWhenAsInstant(), author.getZoneId());
             if (counter == 0) {
                 metaData.setLatestTime(timeStamp);
                 metaData.setInitialDate(timeStamp);

@@ -14,12 +14,9 @@
         <div th:each="entry : ${fileList}">
             <a th:href="@{/{path}(path=${entry.getPostName()})}" >
                 <div class="post-item">
+					<h2 th:text="${entry.getPostName()}"/>
                     <h5 th:text="${entry.getAuthor()}"/>
                     <h6 th:text="${entry.getFormattedCreatedDate()}"/>
-        <!--            <a th:href="@{/{path}(path=${entry.getPostName()})}" >-->
-                    <h2 th:text="${entry.getPostName()}"/>
-        <!--            </a>-->
-<!--                    <h6 th:text="'Last Updated ' + ${entry.getFormattedUpdatedDate()}" />-->
                     <p th:utext="${entry.getLead()}"/>
                 </div>
             </a>

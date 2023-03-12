@@ -3,8 +3,7 @@ package com.pasciitools.pithy.model;
 import lombok.*;
 import org.jetbrains.annotations.NotNull;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.time.temporal.ChronoUnit;
@@ -17,8 +16,8 @@ import java.time.temporal.ChronoUnit;
 @EqualsAndHashCode
 public class FixedPage implements Comparable<FixedPage>{
 
-    private LocalDateTime dateCreated;
-    private LocalDateTime lastUpdated;
+    private ZonedDateTime dateCreated;
+    private ZonedDateTime lastUpdated;
     private String content;
     private String url;
     private String fileName;
@@ -59,6 +58,6 @@ public class FixedPage implements Comparable<FixedPage>{
 
     public String getFormattedUpdatedDate () {
         DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.LONG, FormatStyle.SHORT);
-        return lastUpdated != null ? lastUpdated.atZone(ZoneId.systemDefault()).format(formatter): null;
+        return lastUpdated != null ? lastUpdated.format(formatter): null;
     }
 }

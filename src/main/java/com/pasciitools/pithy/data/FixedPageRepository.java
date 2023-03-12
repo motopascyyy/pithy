@@ -3,12 +3,12 @@ package com.pasciitools.pithy.data;
 import com.pasciitools.pithy.git.GitHelper;
 import com.pasciitools.pithy.model.FileMetaData;
 import com.pasciitools.pithy.model.FixedPage;
-import org.commonmark.Extension;
-import org.commonmark.ext.front.matter.YamlFrontMatterExtension;
-import org.commonmark.ext.front.matter.YamlFrontMatterVisitor;
-import org.commonmark.node.Node;
-import org.commonmark.parser.Parser;
-import org.commonmark.renderer.html.HtmlRenderer;
+import com.vladsch.flexmark.ext.yaml.front.matter.AbstractYamlFrontMatterVisitor;
+import com.vladsch.flexmark.ext.yaml.front.matter.YamlFrontMatterExtension;
+import com.vladsch.flexmark.html.HtmlRenderer;
+import com.vladsch.flexmark.parser.Parser;
+import com.vladsch.flexmark.util.ast.Node;
+import com.vladsch.flexmark.util.misc.Extension;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -87,9 +87,9 @@ public class FixedPageRepository extends PageRepository implements Serializable 
 
         List<Extension> extensions = Collections.singletonList(YamlFrontMatterExtension.create());
         Parser parser = Parser.builder().extensions(extensions).build();
-        YamlFrontMatterVisitor visitor = new YamlFrontMatterVisitor();
+        AbstractYamlFrontMatterVisitor visitor = new AbstractYamlFrontMatterVisitor();
         Node document = parser.parseReader(new FileReader(file));
-        document.accept(visitor);
+        visitor.visit(document);
         HtmlRenderer renderer = HtmlRenderer.builder().extensions(extensions).build();
 
         var content = renderer.render(document);
@@ -110,7 +110,7 @@ public class FixedPageRepository extends PageRepository implements Serializable 
      * Returns the integer value for the YAML Key <code>order</code>. If any issues arise
      * finding this value (null input, no key found, NumberFormatException...), -1 will be returned.
      */
-    private int getFixedPageOrderFromFrontMatter (YamlFrontMatterVisitor visitor) {
+    private int getFixedPageOrderFromFrontMatter (AbstractYamlFrontMatterVisitor visitor) {
         if (visitor != null) {
             var visitorData = visitor.getData();
             if (visitorData != null &&
