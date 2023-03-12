@@ -4,7 +4,7 @@ package com.pasciitools.pithy.model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -16,8 +16,8 @@ class FixedPageTest {
     @BeforeEach
     void init() {
         pageBuilder = new FixedPage().toBuilder().
-                dateCreated(LocalDateTime.now()).
-                lastUpdated(LocalDateTime.now()).
+                dateCreated(ZonedDateTime.now()).
+                lastUpdated(ZonedDateTime.now()).
                 fileName("something").
                 label("something").
                 url("hello.world").
