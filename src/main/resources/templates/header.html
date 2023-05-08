@@ -24,7 +24,7 @@
 
 		<div class="nav-links">
 			<a th:each="headerLink: ${headerLinks}" th:href="@{/fixed/{path}(path=${headerLink.getLabel()})}" th:text="${headerLink.getLabel()}" />
-			<a href="/rss"><img th:src="@{/images/Generic_Feed-icon.svg}" alt="RSS Icon"/></a>
+			<a href="/atom"><img th:src="@{/images/Generic_Feed-icon.svg}" alt="RSS Icon"/></a>
 		</div>
     </header>
 </body>
