@@ -8,17 +8,17 @@ import java.util.List;
 @Data
 public class RSSChannel {
 
-    private List<RSSItem> items;
+    private List<RSSItem> item; //sadly needs to be named singular so that the XML generation happens properly.
     private String title;
     private String link;
     private String description;
     private String language;
 
-    public void addItem(RSSItem item) {
-        if (items == null) {
-            items = new ArrayList<>();
+    public void addItem(RSSItem rssItem) {
+        if (item == null) {
+            item = new ArrayList<>();
         }
-        items.add(item);
+        item.add(rssItem);
     }
 }
 

@@ -34,7 +34,7 @@ public class RSSController {
                 var entry = new RSSItem();
                 entry.setTitle(p.getPostName());
                 entry.setAuthor(p.getAuthor());
-                entry.setLink(blogConfiguration.getUrl() + p.getUrl());
+                entry.setLink(blogConfiguration.getUrl() + "/" + p.getUrl());
                 entry.setPubDate(p.getDateCreated());
                 channel.addItem(entry);
             }
