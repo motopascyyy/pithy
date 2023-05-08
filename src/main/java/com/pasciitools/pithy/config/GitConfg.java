@@ -28,12 +28,13 @@ public class GitConfg implements WebMvcConfigurer {
     @NotEmpty
     private String repoPath;
 
-    @NotEmpty
     private String user;
 
-    @NotEmpty
     private String password;
 
+    private boolean useSSH;
+
+    private String sshPath;
 
     @Bean
     public Git gitBean () throws IOException {

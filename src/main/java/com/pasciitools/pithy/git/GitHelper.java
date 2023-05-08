@@ -1,5 +1,6 @@
 package com.pasciitools.pithy.git;
 
+import com.pasciitools.pithy.config.GitConfg;
 import com.pasciitools.pithy.model.FileMetaData;
 import org.eclipse.jgit.api.*;
 import org.eclipse.jgit.api.errors.GitAPIException;
@@ -8,8 +9,7 @@ import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectReader;
 import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.transport.CredentialsProvider;
-import org.eclipse.jgit.transport.FetchResult;
+import org.eclipse.jgit.transport.*;
 import org.eclipse.jgit.treewalk.CanonicalTreeParser;
 import org.springframework.stereotype.Component;
 
@@ -29,20 +29,25 @@ public class GitHelper implements Serializable {
 
     private final transient Git git;
 
+    private transient GitConfg gitConfg;
+
+
 
     private final transient CredentialsProvider credProv;
 
     public FetchResult fetchUpdates () throws GitAPIException {
 
         FetchCommand fetch = git.fetch();
-        fetch.setCredentialsProvider(credProv);
+        if (!gitConfg.isUseSSH())
+            fetch.setCredentialsProvider(credProv);
         fetch.setRemote("origin");
         return fetch.call();
     }
 
     public PullResult pullUpdates () throws GitAPIException {
         PullCommand pull = git.pull();
-        pull.setCredentialsProvider(credProv);
+        if (!gitConfg.isUseSSH())
+            pull.setCredentialsProvider(credProv);
         pull.setRemote("origin");
         return pull.call();
     }
@@ -86,9 +91,10 @@ public class GitHelper implements Serializable {
         return git.getRepository().resolve(reference);
     }
 
-    public GitHelper(Git git, CredentialsProvider credProv) {
+    public GitHelper(Git git, CredentialsProvider credProv, GitConfg gitConfg) {
         this.credProv = credProv;
         this.git = git;
+        this.gitConfg = gitConfg;
     }
 
     public File getRepoRootDirectory () {
