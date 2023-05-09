@@ -1,6 +1,6 @@
 package com.pasciitools.pithy.model.atom;
 
-import com.pasciitools.pithy.model.rss.adapter.ZonedDataTimeAdapter;
+import com.pasciitools.pithy.model.atom.adapter.ZonedDataTimeAdapter;
 import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;

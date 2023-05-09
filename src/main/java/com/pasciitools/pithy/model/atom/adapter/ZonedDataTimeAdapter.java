@@ -1,4 +1,4 @@
-package com.pasciitools.pithy.model.rss.adapter;
+package com.pasciitools.pithy.model.atom.adapter;
 
 import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 
