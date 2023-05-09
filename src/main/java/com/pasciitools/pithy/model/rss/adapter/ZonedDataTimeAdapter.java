@@ -7,8 +7,7 @@ import java.time.format.DateTimeFormatter;
 
 public class ZonedDataTimeAdapter extends XmlAdapter<String, ZonedDateTime> {
 
-    private final DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
+    private static final DateTimeFormatter dateFormat = DateTimeFormatter.ISO_INSTANT;
     @Override
     public String marshal(ZonedDateTime dateTime) {
         return dateTime.format(dateFormat);
