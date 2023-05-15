@@ -31,10 +31,12 @@ public class AtomFeed {
     private String id;
     @Getter @Setter
     private String title;
+    @Getter @Setter
+    private String subtitle;
     @Setter
     private ZonedDateTime updated;
     @Getter @Setter
-    private String link;
+    private List<AtomLink> link;
     @Getter @Setter
     private String rights;
 

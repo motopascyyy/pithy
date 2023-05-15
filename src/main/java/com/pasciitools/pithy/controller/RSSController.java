@@ -6,6 +6,7 @@ import com.pasciitools.pithy.model.Post;
 import com.pasciitools.pithy.model.atom.AtomEntry;
 import com.pasciitools.pithy.model.atom.AtomEntryAuthor;
 import com.pasciitools.pithy.model.atom.AtomFeed;
+import com.pasciitools.pithy.model.atom.AtomLink;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
 import java.time.ZonedDateTime;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -22,14 +24,16 @@ public class RSSController {
     private final PostRepository postRepository;
     private final BlogConfiguration blogConfiguration;
 
-    @GetMapping(value = "/rss", produces = {MediaType.APPLICATION_RSS_XML_VALUE, MediaType.TEXT_XML_VALUE})
+    @GetMapping(value = "/feeds/main", produces = {MediaType.APPLICATION_ATOM_XML_VALUE})
     public AtomFeed getAtomFeed () {
         var atomFeed = new AtomFeed();
         try {
             var posts = postRepository.getListOfFiles();
             atomFeed.setId(blogConfiguration.getUrl());
             atomFeed.setTitle(blogConfiguration.getTitle());
-            atomFeed.setLink(blogConfiguration.getUrl());
+            AtomLink self = AtomLink.builder().rel("self").href(blogConfiguration.getUrl() + "feeds/main").type(MediaType.APPLICATION_ATOM_XML_VALUE).build();
+            AtomLink alternate = AtomLink.builder().rel("alternate").href(blogConfiguration.getUrl()).type(MediaType.TEXT_HTML_VALUE).build();
+            atomFeed.setLink(Arrays.asList(self, alternate));
             atomFeed.setRights("Copyright " + ZonedDateTime.now().getYear() + " " + blogConfiguration.getTitle());
             atomFeed.setUpdated(posts.get(0).getLastUpdated());
             for (Post p : posts) {
