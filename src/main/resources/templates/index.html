@@ -5,6 +5,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
     <title th:text="${blogTitle}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+	<link rel="icon" href="/favicon.ico" />
+	<link rel="alternate" href="/feeds/main" th:title="${blogTitle}" type="application/atom+xml">
 </head>
 <body>
     <div th:replace="~{header :: header}"></div>
