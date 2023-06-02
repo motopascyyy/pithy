@@ -3,6 +3,7 @@ package com.pasciitools.pithy.controller;
 import com.pasciitools.pithy.config.BlogConfiguration;
 import com.pasciitools.pithy.data.FixedPageRepository;
 import com.pasciitools.pithy.data.PostRepository;
+import com.pasciitools.pithy.exception.PostNotFoundException;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
@@ -57,9 +58,12 @@ public class PageController implements Serializable, ErrorController {
 
         try {
             var p = postRepository.getPost(postName);
+            if (p == null) {
+                throw new PostNotFoundException("Post Not Found");
+            }
             model.put("blogPost", p);
             model.putAll(loadHeaderLinks());
-        } catch (Exception e) {
+        } catch (IOException e) {
             log.error("Could not load '/{} due to {}", postName, e.getMessage());
             return ERROR;
         }
@@ -70,6 +74,9 @@ public class PageController implements Serializable, ErrorController {
     public String getFixedPage (@PathVariable String fixedPage, ModelMap model) {
         try {
             var page = fixedPageRepository.getFixedPage(fixedPage);
+            if (page == null) {
+                throw new PostNotFoundException("Fixed Page Not Found");
+            }
             model.putAll(loadHeaderLinks());
             model.put("fixedPage", page);
         } catch (IOException e) {
@@ -87,6 +94,7 @@ public class PageController implements Serializable, ErrorController {
         if (status != null) {
             Integer statusCode = Integer.valueOf(status.toString());
             model.put("errorCode", statusCode);
+            request.getAttributeNames();
             model.put("errorException", request.getAttribute(RequestDispatcher.ERROR_EXCEPTION));
             logError(request);
         }
