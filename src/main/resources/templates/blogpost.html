@@ -10,7 +10,7 @@
     <header th:replace="header :: header"/>
     <main>
         <article>
-			<h1 th:text="${blogPost.getPostName()}"/>
+			<h2 th:text="${blogPost.getPostName()}"/>
             <div class="post-info">
                 <h5 th:text="${blogPost.getAuthor()}"/>
 				<div th:if="${blogPost.isUpdated()}">

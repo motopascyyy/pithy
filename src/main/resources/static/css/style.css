@@ -10,31 +10,6 @@
     --font-size-xx-large: 3rem;
 }
 
-@media (prefers-color-scheme: dark) {
-    header h1 a {
-        color: #fff;
-    }
-
-    header, footer, pre {
-        color: #888;
-    }
-
-    pre > code {
-        color: black;
-    }
-
-}
-
-@media print {
-    header, footer, main > h1, .post-info {
-        display: none !important;
-    }
-
-    article {
-        line-height: 1em;
-    }
-}
-
 * {
     box-sizing: border-box;
 
@@ -55,21 +30,11 @@ main {
     line-height: 1.6em;
 }
 
-main > article{
-    flex: 1;
-    line-height: 1.6em;
-    background: white;
-    margin: 10px 0 10px 0;
-    border-radius: 6px;
-    padding: 1em 1em 0.25em 1em;
-    box-shadow: 0 1px 2px rgb(48 54 60 / 15%);
-}
-
 .post-info > h1 {
     margin-top: 0
 }
 main, article {
-    max-width: 640px;
+    max-width: 800px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -94,6 +59,11 @@ h1 {
     line-height: 1.1em;
     margin-bottom: 0.5rem;
     margin-top: 0;
+}
+
+h2 {
+    margin-bottom: 0.1em;
+    border-bottom: 1px solid;
 }
 
 h6 strong {
@@ -223,8 +193,16 @@ header > #nav-check {
     height: 40px;
 }
 
-
-.post-item {
+main > article{
+    flex: 1;
+    line-height: 1.6em;
+    /*background: white;*/
+    /*margin: 10px 0 10px 0;*/
+    /*border-radius: 6px;*/
+    /*padding: 1.5em 2em 1.5em 2em;*/
+    /*box-shadow: 0 1px 2px rgb(48 54 60 / 15%);*/
+}
+.post-item, main > article {
     /* border: 1px solid lightgray; */
     border-radius: 6px;
     color: inherit;
@@ -294,4 +272,45 @@ pre code {
 .footnotes li p {
     line-height: 1rem;
     margin-bottom: 0.5em;
+}
+
+
+@media (prefers-color-scheme: dark) {
+    body {
+        color: #e4e4e4;
+        background-color: #1e1e1e;
+    }
+
+    main > article, .post-item {
+        background-color: #4d4d4d;
+    }
+
+    header h1 a {
+        color: #fff;
+    }
+
+    header, footer, pre {
+        color: #888;
+    }
+
+    pre > code {
+        color: black;
+    }
+
+}
+
+@media print {
+    header, footer, main > h1, .post-info, main > article > h2 {
+        display: none !important;
+    }
+
+    article a {
+        color: black;
+    }
+
+    main > article {
+        line-height: 1em;
+        border: none;
+        box-shadow: none;
+    }
 }

@@ -10,8 +10,8 @@
 	<header th:replace="header :: header"/>
 	<main>
 		<article>
+			<h2 th:text="${fixedPage.getLabel()}"/>
 			<div class="post-info">
-				<h1 th:text="${fixedPage.getLabel()}"/>
 				<div th:if="${fixedPage.isUpdated()}">
 					<h6 th:utext="'Updated: <em>' + ${fixedPage.getFormattedUpdatedDate()} + '</em>'"/>
 				</div>
