@@ -24,6 +24,7 @@ public class Post implements Comparable<Post> {
     private String lead;
 
     private String url;
+    private String encodedUrl;
 
     public Post(String author, ZonedDateTime dateCreated, ZonedDateTime lastUpdated, String postName) {
         this.author = author;

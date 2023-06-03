@@ -44,8 +44,8 @@ public class RSSController {
 
                 entry.setAuthor(List.of(entryAuthor));
                 var link = blogConfiguration.getUrl().endsWith("/") ?
-                        blogConfiguration.getUrl() + p.getUrl() :
-                        blogConfiguration.getUrl() + "/" + p.getUrl();
+                        blogConfiguration.getUrl() + p.getEncodedUrl() :
+                        blogConfiguration.getUrl() + "/" + p.getEncodedUrl();
                 entry.setLink(link);
                 entry.setPublished(p.getDateCreated());
                 entry.setUpdated(p.getLastUpdated());

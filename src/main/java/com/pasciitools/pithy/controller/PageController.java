@@ -53,7 +53,7 @@ public class PageController implements Serializable, ErrorController {
         return "index";
     }
 
-    @GetMapping(value = "/{postName:^(?!favicon\\.ico$).*$}")
+    @GetMapping(value = "/post/{postName:^(?!favicon\\.ico$).*$}")
     public String getPost (@PathVariable String postName, ModelMap model) {
 
         try {

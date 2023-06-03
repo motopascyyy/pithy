@@ -14,7 +14,7 @@
         <h1 th:text="'Welcome to ' + ${blogTitle}" />
         <h4 th:text="${blogDesc}" />
         <div th:each="entry : ${fileList}">
-            <a th:href="@{/{path}(path=${entry.getPostName()})}" >
+            <a th:href="@{/{path}(path=${entry.getUrl()})}" >
                 <div class="post-item">
 					<h2 th:text="${entry.getPostName()}"/>
                     <h5 th:text="${entry.getAuthor()}"/>

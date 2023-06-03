@@ -30,14 +30,15 @@ public class PostRepository extends PageRepository implements Serializable {
         var listOfPosts = new ArrayList<Post>();
         FilenameFilter filenameFilter = (file, s) -> s.endsWith(".md");
         var fileList = repoFolder.listFiles(filenameFilter);
-        if (fileList != null && fileList.length > 0) {
+        if (fileList != null) {
             for (File file : fileList) {
                 try {
                     Post post = createPostObject(file, gitHelper);
                     String content = githubMarkdown(file);
                     post.setContent(content);
                     post.setLead(content.substring(0, Math.min(400, content.length() - 1)) + "...");
-                    post.setUrl(UriEncoder.encode(post.getPostName()));
+                    post.setUrl("post/" + post.getPostName());
+                    post.setEncodedUrl("post/" + UriEncoder.encode(post.getPostName()));
                     listOfPosts.add(post);
                 } catch (GitAPIException e) {
                     log.error("Couldn't get metadata from file: " + file.getName(), e);
