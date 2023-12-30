@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title th:text="${blogTitle}">Title not set</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+	<link rel="icon" href="/favicon.ico" />
+	<link rel="alternate" href="/feeds/main" th:title="${blogTitle}" type="application/atom+xml">
+</head>
+<body>
+	<div th:replace="~{header :: header}"></div>
+	<main>
+		<form action="#" th:action="@{/config/user/save}" th:object="${user}" method="post">
+			<fieldset>
+				<input type="submit" id="userSubmit" th:value="Save" />
+				<label>
+					<span>Username</span>
+					<input type="text" th:field="*{username}" th:value="*{username}" th:readonly="${user.username ne null}">
+				</label>
+				<label for="enabled">Enabled:</label>
+				<input type="checkbox" id="enabled" name="enabled" th:checked="*{enabled}" th:value="true"/>
+				<div>
+					<label for="password">Password:</label>
+					<input type="password" id="password" name="password" th:field="*{password}" th:value="*{password}"/>
+				</div>
+				<div>
+					<label>Roles:</label>
+					<div th:each="role : ${allRoles}">
+						<label>
+							<input type="checkbox" name="roles" th:checked="${user.roles ne null && user.getRoles().contains(role.roleName)}" th:value="${role.roleName}"/>
+							<span th:text="${role.roleName}"></span>
+						</label>
+					</div>
+				</div>
+			</fieldset>
+		</form>
+	</main>
+	<footer th:replace="~{footer :: footer}"></footer>
+</body>
+</html>

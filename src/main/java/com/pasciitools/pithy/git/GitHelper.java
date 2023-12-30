@@ -1,6 +1,6 @@
 package com.pasciitools.pithy.git;
 
-import com.pasciitools.pithy.config.GitConfg;
+import com.pasciitools.pithy.data.AppConfigRepo;
 import com.pasciitools.pithy.model.FileMetaData;
 import org.eclipse.jgit.api.*;
 import org.eclipse.jgit.api.errors.GitAPIException;
@@ -9,7 +9,8 @@ import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectReader;
 import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.transport.*;
+import org.eclipse.jgit.transport.CredentialsProvider;
+import org.eclipse.jgit.transport.FetchResult;
 import org.eclipse.jgit.treewalk.CanonicalTreeParser;
 import org.springframework.stereotype.Component;
 
@@ -29,16 +30,18 @@ public class GitHelper implements Serializable {
 
     private final transient Git git;
 
-    private transient GitConfg gitConfg;
 
-
+    private transient AppConfigRepo appConfigRepo;
 
     private final transient CredentialsProvider credProv;
 
     public FetchResult fetchUpdates () throws GitAPIException {
 
         FetchCommand fetch = git.fetch();
-        if (!gitConfg.isUseSSH())
+        var useSSHOpt = appConfigRepo.findByConfigKey("git.useSSH");
+        boolean useSSH = useSSHOpt.filter(appConfig -> Boolean.parseBoolean(appConfig.getConfigValue())).isPresent();
+
+        if (!useSSH && credProv != null)
             fetch.setCredentialsProvider(credProv);
         fetch.setRemote("origin");
         return fetch.call();
@@ -46,7 +49,9 @@ public class GitHelper implements Serializable {
 
     public PullResult pullUpdates () throws GitAPIException {
         PullCommand pull = git.pull();
-        if (!gitConfg.isUseSSH())
+        var useSSHOpt = appConfigRepo.findByConfigKey("git.useSSH");
+        boolean useSSH = useSSHOpt.filter(appConfig -> Boolean.parseBoolean(appConfig.getConfigValue())).isPresent();
+        if (!useSSH && credProv != null)
             pull.setCredentialsProvider(credProv);
         pull.setRemote("origin");
         return pull.call();
@@ -91,13 +96,16 @@ public class GitHelper implements Serializable {
         return git.getRepository().resolve(reference);
     }
 
-    public GitHelper(Git git, CredentialsProvider credProv, GitConfg gitConfg) {
+    public GitHelper(Git git, CredentialsProvider credProv, AppConfigRepo appConfigRepo) {
         this.credProv = credProv;
         this.git = git;
-        this.gitConfg = gitConfg;
+        this.appConfigRepo = appConfigRepo;
     }
 
     public File getRepoRootDirectory () {
         return git.getRepository().getWorkTree();
     }
+
+
+
 }

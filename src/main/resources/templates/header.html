@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
@@ -18,13 +18,13 @@
 			<label for="nav-check">
 				<span></span>
 				<span></span>
-				<span></span>
 			</label>
 		</div>
 
 		<div class="nav-links">
 			<a th:each="headerLink: ${headerLinks}" th:href="@{/fixed/{path}(path=${headerLink.getLabel()})}" th:text="${headerLink.getLabel()}" />
 			<a href="/feeds/main"><img th:src="@{/images/Generic_Feed-icon.svg}" alt="RSS Icon"/></a>
+			<a sec:authorize="isAuthenticated()" href="/config"><img th:src="@{/images/Generic_settings_cog.svg}" alt="Settings Icon" /></a>
 		</div>
     </header>
 </body>

@@ -1,9 +1,18 @@
 plugins {
-    id 'org.springframework.boot' version '3.0.6'
-    id 'io.spring.dependency-management' version '1.1.0'
+    id 'org.springframework.boot' version '3.2.0'
+    id 'io.spring.dependency-management' version '1.1.2'
     id 'java'
     id 'jvm-test-suite'
     id "io.freefair.lombok" version "6.5.1"
+    id 'maven-publish'
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
 }
 
 group 'com.pasciitools'
@@ -12,6 +21,7 @@ sourceCompatibility = '17'
 
 repositories {
     mavenCentral()
+    mavenLocal()
 }
 
 dependencies {
@@ -25,11 +35,13 @@ dependencies {
     implementation 'org.jetbrains:annotations:24.0.1'
     implementation 'org.hibernate.validator:hibernate-validator:8.0.0.Final'
     implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation 'com.vladsch.flexmark:flexmark-all:0.64.0'
-
+    implementation 'org.jsoup:jsoup:1.16.1' //dependency added only to satisfy nested security vulnerability in flexmark
+    implementation 'com.vladsch.flexmark:flexmark-all:0.64.6'
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6:3.1.1.RELEASE'
+    implementation 'com.pasciitools:common-model:0.1-SNAPSHOT'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    compileOnly 'org.springframework.boot:spring-boot-devtools'
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 }
 

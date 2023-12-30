@@ -35,6 +35,7 @@ main {
 }
 main, article {
     max-width: 800px;
+    min-height: 300px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -196,11 +197,6 @@ header > #nav-check {
 main > article{
     flex: 1;
     line-height: 1.6em;
-    /*background: white;*/
-    /*margin: 10px 0 10px 0;*/
-    /*border-radius: 6px;*/
-    /*padding: 1.5em 2em 1.5em 2em;*/
-    /*box-shadow: 0 1px 2px rgb(48 54 60 / 15%);*/
 }
 .post-item, main > article {
     /* border: 1px solid lightgray; */
@@ -313,4 +309,84 @@ pre code {
         border: none;
         box-shadow: none;
     }
+}
+
+.tab-group {
+    width: 800px;
+}
+
+/* Style the tab */
+.tabs {
+    overflow: hidden;
+    /*     border: 1px solid #ccc; */
+    background-color: #4d4d4d;
+
+}
+
+/* Style the buttons inside the tab */
+.tabs button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    /*     transition: 0.3s; */
+    font-size: 17px;
+    color: #fff;
+}
+
+/* Change background color of buttons on hover */
+.tabs button:hover, .link-button:hover, .link-button-small:hover {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+/* Create an active/current tablink class */
+.tabs button.active {
+    background-color: rgba(0, 0, 0, 0.5);
+
+}
+
+.form_entry_area {
+    display: table;
+    margin: 5px auto 5px auto;
+    border-spacing: 0 5px;
+    table-layout: auto;
+
+}
+
+.config_entry_item {
+    display: table-row;
+}
+
+.entry_container {
+    display: table-cell;
+    padding: 5px 30px 5px 30px;
+}
+
+.entry_container > input.config-value {
+    width: 350px
+}
+
+.form-buttons {
+    text-align: right;
+}
+
+.link-button, .link-button:visited {
+    padding: 14px 16px;
+    font-size: 17px;
+    color: #fff;
+    background-color: #4d4d4d;
+    margin: 10px;
+    display: inline-block;
+}
+
+.link-button-small {
+    padding: 7px 8px;
+    font-size: 17px;
+    color: #fff;
+    background-color: #4d4d4d;
+    margin: 10px;
+    display: inline-block;
+
 }

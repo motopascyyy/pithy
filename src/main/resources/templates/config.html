@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title th:text="${blogTitle}"/>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+	<link rel="icon" href="/favicon.ico"/>
+	<link rel="alternate" href="/feeds/main" th:title="${blogTitle}" type="application/atom+xml">
+</head>
+<body>
+<div th:replace="~{header :: header}"></div>
+<main>
+	<div class="tab-group">
+		<h1>Configurations</h1>
+		<div class="tabs">
+			<button class="tablinks" id="defaultOpen" onclick="openTab(event, 'Settings')">Settings</button>
+			<button class="tablinks" onclick="openTab(event, 'Users')">Users</button>
+		</div>
+		<div id="Settings" class="tabcontent">
+			<form action="#" th:action="@{/config/settings/save}" th:object="${appConfigDTO}" method="post">
+				<fieldset>
+					<div class="form-buttons">
+						<button type="submit" id="settingSubmit">Save</button>
+					</div>
+<!--					<input type="reset" id="settingReset" name="reset" th:value="Reset"/>-->
+					<div class="form_entry_area">
+						<div class="config_entry_item" th:each="config, itemStat : *{appConfigList}">
+							<div class="entry_container">
+								<!--I'm creating this hidden input field so that I can properly map the configValue
+									in the next input field to the current configKey. I couldn't find a way to do
+									this with just a label. It's a hack and I'll want to fix at some point.-->
+								<input class="config-key" th:field="*{appConfigList[__${itemStat.index}__].configKey}"
+									  th:readonly="readonly" hidden="hidden"></input>
+								<label th:text="*{appConfigList[__${itemStat.index}__].configKey}"></label>
+							</div>
+							<div class="entry_container">
+								<input class="config-value" th:field="*{appConfigList[__${itemStat.index}__].configValue}">
+							</div>
+						</div>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+
+		<div id="Users" class="tabcontent">
+			<div th:object="${userConfigDTO}">
+				<a class="link-button" th:href="@{/config/add-user}">Add User</a>
+				<div class="form_entry_area">
+					<span>Username</span>
+					<div class="config_entry_item" th:each="config, itemStat : *{userList}">
+						<div class="entry_container"><span th:text="*{userList[__${itemStat.index}__].username}"></span></div>
+						<div class="entry_container"><a class="link-button-small" th:href="@{/config/edit/{user}(user=*{userList[__${itemStat.index}__].username})}">✏️</a></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</main>
+<footer th:replace="~{footer :: footer}"></footer>
+<script>
+	function openTab(evt, tabName) {
+		let i, tabcontent, tablinks;
+		tabcontent = document.getElementsByClassName("tabcontent");
+		for (i = 0; i < tabcontent.length; i++) {
+			tabcontent[i].style.display = "none";
+		}
+		tablinks = document.getElementsByClassName("tablinks");
+		for (i = 0; i < tablinks.length; i++) {
+			tablinks[i].className = tablinks[i].className.replace(" active", "");
+		}
+		document.getElementById(tabName).style.display = "block";
+		evt.currentTarget.className += " active";
+	}
+
+	// Get the element with id="defaultOpen" and click on it
+	document.getElementById("defaultOpen").click();
+</script>
+
+</body>
+</html>
