@@ -36,8 +36,8 @@ public class BaseConfig implements WebMvcConfigurer {
                 throw new IOException(errMsg, e);
             }
         } else {
-            log.error("Git repo path has bnot been configured. Please make sure it is configured at /config and restart the service.");
-            return null;
+            log.error("Git repo path has not been configured. Please make sure it is configured at /config and restart the service.");
+            return Git.open(new File("."));
         }
     }
 
