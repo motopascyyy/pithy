@@ -20,6 +20,8 @@ import java.io.IOException;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -47,7 +49,7 @@ public class PageController implements Serializable, ErrorController, PithyContr
             var listOfFiles = postRepository.getListOfFiles();
             model.put("blogTitle", blogTitleAppConfig.isPresent() ? blogTitleAppConfig.get().getConfigValue() : "Title TBD");
             model.put("blogDesc", blogDescriptionAppConfig.isPresent() ? blogDescriptionAppConfig.get().getConfigValue() : "Description TBD");
-            model.put("fileList", listOfFiles);
+            model.put("fileList", listOfFiles != null ? listOfFiles : Collections.emptyList());
             model.putAll(loadHeaderLinks(fixedPageRepository));
         } catch (IOException e) {
             log.error("Could not load '/' due to {}", e.getMessage());

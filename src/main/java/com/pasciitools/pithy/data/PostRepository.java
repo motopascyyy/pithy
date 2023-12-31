@@ -11,6 +11,7 @@ import org.yaml.snakeyaml.util.UriEncoder;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -24,8 +25,9 @@ public class PostRepository extends PageRepository implements Serializable {
 
     public List<Post> getListOfFiles () throws IOException {
         File repoFolder = gitHelper.getRepoRootDirectory();
-        if (!repoFolder.exists() || !repoFolder.isDirectory() || !repoFolder.canExecute()) {
-            throw new IOException("Could not access blog repository folder. Please make sure the `defaultGitPath` is properly configured");
+        if (repoFolder == null || !repoFolder.exists() || !repoFolder.isDirectory() || !repoFolder.canExecute()) {
+            log.warn("Could not access blog repository folder. Please make sure the `defaultGitPath` is properly configured");
+            return Collections.emptyList();
         }
         var listOfPosts = new ArrayList<Post>();
         FilenameFilter filenameFilter = (file, s) -> s.endsWith(".md");

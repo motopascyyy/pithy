@@ -59,7 +59,8 @@ public class FixedPageRepository extends PageRepository implements Serializable 
     public FixedPage getFixedPage (String fixedPageName) throws IOException{
         File repoFolder = gitHelper.getRepoRootDirectory();
         if (!repoFolder.exists() || !repoFolder.isDirectory() || !repoFolder.canExecute()) {
-            throw new IOException("Could not access blog repository folder. Please make sure the `defaultGitPath` is properly configured");
+            log.warn("Could not access blog repository folder. Please make sure the `defaultGitPath` is properly configured");
+            return null;
         }
 
         String fileName = fixedPageName + ".md";

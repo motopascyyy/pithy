@@ -24,7 +24,7 @@ public class BlogRefresh {
     public void refreshBlog () {
         try {
             var fetchResult = githelper.fetchUpdates();
-            if (fetchResult.getTrackingRefUpdates() != null
+            if (fetchResult != null && fetchResult.getTrackingRefUpdates() != null
                     && !fetchResult.getTrackingRefUpdates().isEmpty()) {
                 ObjectId oldHead = githelper.getObjectId("HEAD^{tree}");
                 githelper.pullUpdates();

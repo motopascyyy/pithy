@@ -15,6 +15,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Optional;
 
 @Component
 @Data
@@ -27,17 +28,20 @@ public class BaseConfig implements WebMvcConfigurer {
     @Bean
     public Git gitBean () throws IOException {
 
+        Optional<Git> gitOptional = Optional.empty();
         var repoPathOpt = appConfigRepo.findByConfigKey("git.repoPath");
         if (repoPathOpt.isPresent()){
             try {
-                return Git.open(new File(repoPathOpt.get().getConfigValue()));
+                var git = Git.open(new File(repoPathOpt.get().getConfigValue()));
+//                gitOptional = Optional.of(git);
+                return git;
             } catch (IOException e) {
-                var errMsg = String.format("Could not open Git repo at path %s. Please make sure it is configured at /config and restart the service.", repoPathOpt.get().getConfigValue());
-                throw new IOException(errMsg, e);
+                log.warn("Could not open Git repo at path {}. Please make sure it is configured at /config and restart the service.", repoPathOpt.get().getConfigValue());
+                return null;
             }
         } else {
-            log.error("Git repo path has not been configured. Please make sure it is configured at /config and restart the service.");
-            return Git.open(new File("."));
+            log.warn("Git repo path has not been configured. Please make sure it is configured at /config and restart the service.");
+            return null;
         }
     }
 
@@ -46,7 +50,8 @@ public class BaseConfig implements WebMvcConfigurer {
         var user = appConfigRepo.findByConfigKey("git.user");
         var password = appConfigRepo.findByConfigKey("git.password");
         if (user.isPresent() && password.isPresent()) {
-            return new UsernamePasswordCredentialsProvider(user.get().getConfigValue(), password.get().getConfigValue());
+            var userCreds =  new UsernamePasswordCredentialsProvider(user.get().getConfigValue(), password.get().getConfigValue());
+            return userCreds;
         } else {
             log.error("Git user or password has not been configured. Please ensure they are is set at /config and restart the service.");
         }
