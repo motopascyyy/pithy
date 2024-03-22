@@ -1,5 +1,5 @@
 plugins {
-    id 'org.springframework.boot' version '3.2.0'
+    id 'org.springframework.boot' version '3.2.3'
     id 'io.spring.dependency-management' version '1.1.2'
     id 'java'
     id 'jvm-test-suite'
@@ -29,6 +29,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-web-services'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'com.h2database:h2:2.1.214'
     implementation 'org.eclipse.jgit:org.eclipse.jgit:6.5.0.202303070854-r'
     implementation 'org.eclipse.jgit:org.eclipse.jgit.ssh.apache:6.5.0.202303070854-r'

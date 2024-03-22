@@ -31,6 +31,8 @@ public class WebSecurityConfig {
                         requests
                                 .requestMatchers(mvc.pattern("/config/**")).hasRole("ADMIN")
                                 .requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll()
+                                .requestMatchers(mvc.pattern("/actuator/health")).permitAll()
+                                .requestMatchers(mvc.pattern("/actuator/**")).hasRole("ADMIN")
 
                 )
                 .csrf(csrf ->
@@ -43,6 +45,14 @@ public class WebSecurityConfig {
                 .logout(LogoutConfigurer::permitAll);
 
         http.authorizeHttpRequests(requests -> requests.anyRequest().permitAll());
+
+        http.httpBasic().disable();
+        http.
+                headers().
+                httpStrictTransportSecurity().
+                maxAgeInSeconds(40).
+                includeSubDomains(true).
+                preload(false);
         return http.build();
     }
 
