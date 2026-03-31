@@ -14,8 +14,22 @@ sourceCompatibility = '17'
 repositories {
     mavenCentral()
     mavenLocal()
-}
+    maven {
+        url = 'https://nexus.pascii-tools.com/repository/maven-releases/'
+        credentials {
+            username = project.findProperty('nexusUser') ?: ''
+            password = project.findProperty('nexusPass') ?: ''
+        }
+    }
+    maven {
+        url = 'https://nexus.pascii-tools.com/repository/maven-snapshots/'
+        credentials {
+            username = project.findProperty('nexusUser') ?: ''
+            password = project.findProperty('nexusPass') ?: ''
+        }
 
+    }
+}
 
 publishing {
     publications {
